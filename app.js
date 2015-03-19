@@ -8,6 +8,8 @@ var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
+var EmployeeProvider = require('./employeeprovider').EmployeeProvider;
+
 var app = express();
 
 // view engine setup
@@ -26,6 +28,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/users', users);
 
+var employeeProvider = new EmployeeProvider('localhost', 27017);
+
+
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
@@ -37,25 +43,28 @@ app.use(function(req, res, next) {
 
 // development error handler
 // will print stacktrace
-if (app.get('env') === 'development') {
-  app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
-      message: err.message,
-      error: err
-    });
-  });
-}
-
-// production error handler
-// no stacktraces leaked to user
-app.use(function(err, req, res, next) {
-  res.status(err.status || 500);
-  res.render('error', {
-    message: err.message,
-    error: {}
+if (app.get('/', function(req, res){
+  employeeProvider.findAll(function(error, emps){
+      res.render('index', {
+            title: 'Employees',
+            employees:emps
+        });
   });
 });
 
+app.get('/employee/new', function(req, res) {
+    res.render('employee_new', {
+        title: 'New Employee'
+    });
+});
 
-module.exports = app;
+//save new employee
+app.post('/employee/new', function(req, res){
+    employeeProvider.save({
+        title: req.param('title'),
+        name: req.param('name')
+    }, function( error, docs) {
+        res.redirect('/')
+    });
+
+app.listen(3000);

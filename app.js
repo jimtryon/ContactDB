@@ -13,7 +13,7 @@ var http = require('http'),
     user = require('./routes/users'),
 
     path = require('path'),
-    EmployeeProvider = require('./employeeprovider').EmployeeProvider;
+    ContactProvider = require('./employeeprovider').ContactProvider;
 
 var app = express();
 
@@ -39,28 +39,28 @@ app.use(bodyParser.urlencoded({
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-var employeeProvider = new EmployeeProvider('localhost', 27017);
+var contactProvider = new ContactProvider('localhost', 27017);
 
 //Routes
 
 app.get('/', function(req, res) {
-    employeeProvider.findAll(function(error, emps) {
+    ContactProvider.findAll(function(error, emps) {
         res.render('index', {
-            title: 'Employees',
-            employees: emps
+            title: 'Contacts',
+            contacts: emps
         });
     });
 });
 
-app.get('/employee/new', function(req, res) {
+app.get('/contact/new', function(req, res) {
     res.render('employee_new', {
         title: 'New Employee'
     });
 });
 
-//save new employee
-app.post('/employee/new', function(req, res) {
-    employeeProvider.save({
+//save new contact
+app.post('/contact/new', function(req, res) {
+    ContactProvider.save({
         title: req.param('title'),
         name: req.param('name')
     }, function(error, docs) {
@@ -68,18 +68,18 @@ app.post('/employee/new', function(req, res) {
     });
 });
 
-//update an employee
-app.get('/employee/:id/edit', function(req, res) {
-    employeeProvider.findById(req.param('_id'), function(error, employee) {
+//update an contact
+app.get('/contact/:id/edit', function(req, res) {
+    ContactProvider.findById(req.param('_id'), function(error, contact) {
         res.render('employee_edit', {
-            employee: employee
+            contact: contacts
         });
     });
 });
 
-//save updated employee
-app.post('/employee/:id/edit', function(req, res) {
-    employeeProvider.update(req.param('_id'), {
+//save updated contact
+app.post('/contact/:id/edit', function(req, res) {
+    ContactProvider.update(req.param('_id'), {
         title: req.param('title'),
         name: req.param('name')
     }, function(error, docs) {
@@ -87,9 +87,9 @@ app.post('/employee/:id/edit', function(req, res) {
     });
 });
 
-//delete an employee
-app.post('/employee/:id/delete', function(req, res) {
-        employeeProvider.delete(req.param('_id'), function(error, docs) {
+//delete an contact
+app.post('/contact/:id/delete', function(req, res) {
+        ContactProvider.delete(req.param('_id'), function(error, docs) {
                 res.redirect('/')
         });
 });

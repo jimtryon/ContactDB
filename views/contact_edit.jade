@@ -1,0 +1,17 @@
+extends layout
+
+block content
+    h1= "Edit Contact"
+    div.newcontact
+        form( method="post")
+            input(name="_id", type="hidden", value=contact._id.toHexString()) 
+            div
+                div
+                    span.label Title :
+                    input(type="text", name="title", id="editContactTitle", value=[title])
+                div
+                    span.label Name :
+                    input(type="text", name="name", id="editContactName", value=contact.name)
+                div#editContactSubmit
+                    input(type="submit", value="Update")
+        a(href="/")!= "Back to Contact List"

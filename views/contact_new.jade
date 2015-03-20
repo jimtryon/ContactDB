@@ -6,26 +6,11 @@ block content
 		form( method="post")
 			div
 				div
-					span.label Title:
+					span.label Title :
 					input(type="text", name="title", id="editContactTitle")
 				div
-					span.label Name:
+					span.label Name :
 					input(type="text", name="name", id="editContactName")
-				div
-					span.label Company:
-					input(type="text", name="company", id="editContactCo")
-				div
-					span.label Email:
-					input(type="text", name="email", id="editContactEmail")
-				div
-					span.label Where Met:
-					input(type="text", name="wheremet", id="editContactWhere")
-				div
-					span.label Date Met:
-					input(type="text", name="datemet", id="editContactDate")
-				div
-					span.label Comments:
-					textarea(name="comments", rows="5" id="editContactCom")
 				div#editEmployeeSubmit
 					input(type="submit", value="Save")
 		a(href="/")!= "Back to Contact List"

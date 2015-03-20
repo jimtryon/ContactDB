@@ -56,17 +56,23 @@ EmployeeProvider.prototype.save = function(employees, callback) {
 
 //find an employee by ID
 EmployeeProvider.prototype.findById = function(id, callback) {
-    this.getCollection(function(error, employee_collection) {
+this.getCollection(function(error, employee_collection) {
         if (error) callback(error)
         else {
             employee_collection.findOne({
-                _id: employee_collection.db.bson_serializer.ObjectID.createFromHexString(id)
-            }, function(error, result) {
-                if (error) callback(error)
-                else callback(null, result)
+                // var ObjectID = require('mongodb').ObjectID;
+                // employee_collection.findOne({ "_id": ObejctID(id) },function(err,result) {
+
+                // work in here
             });
-        }
-    });
+            _id: employee_collection.db.bson_serializer.ObjectID.createFromHexString(id)
+        },
+        function(error, result) {
+            if (error) callback(error)
+            else callback(null, result)
+        });
+}
+});
 };
 
 // update an employee

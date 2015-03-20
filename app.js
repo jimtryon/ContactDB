@@ -87,6 +87,13 @@ app.post('/employee/:id/edit', function(req, res) {
     });
 });
 
+//delete an employee
+app.post('/employee/:id/delete', function(req, res) {
+        employeeProvider.delete(req.param('_id'), function(error, docs) {
+                res.redirect('/')
+        });
+});
+
 // development only
 if ('development' == app.get('env')) {
     app.set('mongodb_uri', 'mongo://localhost/dev');

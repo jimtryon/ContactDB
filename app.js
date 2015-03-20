@@ -43,13 +43,13 @@ var contactProvider = new ContactProvider('localhost', 27017);
 
 //Routes
 
-app.get('/', function(req, res) {
-    ContactProvider.findAll(function(error, emps) {
-        res.render('index', {
-            title: 'Contacts',
-            contacts: emps
+app.get('/', function(req, res){
+  employeeProvider.findAll(function(error, emps){
+      res.render('index', {
+            title: 'Employees',
+            employees:emps
         });
-    });
+  });
 });
 
 app.get('/contact/new', function(req, res) {
@@ -58,21 +58,21 @@ app.get('/contact/new', function(req, res) {
     });
 });
 
-//save new contact
-app.post('/contact/new', function(req, res) {
-    ContactProvider.save({
+//save new employee
+app.post('/contact/new', function(req, res){
+    employeeProvider.save({
         title: req.param('title'),
         name: req.param('name')
-    }, function(error, docs) {
+    }, function( error, docs) {
         res.redirect('/')
     });
 });
 
 //update an contact
 app.get('/contact/:id/edit', function(req, res) {
-    ContactProvider.findById(req.param('_id'), function(error, contact) {
+    ContactProvider.findById(req.param('_id'), function(error, employee) {
         res.render('employee_edit', {
-            contact: contacts
+            employee: employee
         });
     });
 });

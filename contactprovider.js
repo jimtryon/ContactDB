@@ -5,7 +5,7 @@ var BSON = require('mongodb').BSON;
 var ObjectID = require('mongodb').ObjectID;
 
 EmployeeProvider = function(host, port) {
-		this.db = new Db('node-mongo-employee', new Server(host, port, {
+		this.db = new Db('node-mongo-contact', new Server(host, port, {
 				safe: false
 		}, {
 				auto_reconnect: true
@@ -15,7 +15,7 @@ EmployeeProvider = function(host, port) {
 
 
 EmployeeProvider.prototype.getCollection = function(callback) {
-		this.db.collection('employees', function(error, employee_collection) {
+		this.db.collection('contacts', function(error, employee_collection) {
 				if (error) callback(error);
 				else callback(null, employee_collection);
 		});

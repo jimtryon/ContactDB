@@ -13,7 +13,7 @@ var http = require('http'),
     user = require('./routes/users'),
 
     path = require('path'),
-    ContactProvider = require('./contactprovider').ContactProvider;
+    ContactProvider = require('./employeeprovider').ContactProvider;
 
 var app = express();
 
@@ -44,17 +44,17 @@ var contactProvider = new ContactProvider('localhost', 27017);
 //Routes
 
 app.get('/', function(req, res) {
-    contactProvider.findAll(function(error, contacts) {
+    ContactProvider.findAll(function(error, emps) {
         res.render('index', {
             title: 'Contacts',
-            contacts: contacts
+            contacts: emps
         });
     });
 });
 
 app.get('/contact/new', function(req, res) {
-    res.render('contact_new', {
-        title: 'New Contact'
+    res.render('employee_new', {
+        title: 'New Employee'
     });
 });
 
@@ -71,7 +71,7 @@ app.post('/contact/new', function(req, res) {
 //update an contact
 app.get('/contact/:id/edit', function(req, res) {
     ContactProvider.findById(req.param('_id'), function(error, contact) {
-        res.render('contact_edit', {
+        res.render('employee_edit', {
             contact: contacts
         });
     });

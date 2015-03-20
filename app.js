@@ -13,6 +13,11 @@ var http = require('http'),
     user = require('./routes/users'),
 
     path = require('path'),
+
+    expressValidator = require('express-validator'); //Declare Express-Validator
+
+    stylus = require('stylus'),
+    
     EmployeeProvider = require('./employeeprovider').EmployeeProvider;
 
 var app = express();
@@ -27,6 +32,11 @@ app.set('view options', {
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
+
+app.use(stylus.middleware({
+    src: __dirname + '/public',
+    compile: true
+}))
 app.use(methodOverride());
 
 // parse application/json
@@ -36,6 +46,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true
 }));
+
+app.use(expressValidator),  //required for Express-Validator
 
 app.use(express.static(path.join(__dirname, 'public')));
 
